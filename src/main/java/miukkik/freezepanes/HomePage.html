@@ -7,9 +7,17 @@
 
 <body>
 	<table>
-		<tr wicket:id="tablerow">
-			<td wicket:id="repeatingcell">cell data</td>
-		</tr>
+		<thead>
+			<tr wicket:id="headerrow">
+				<th wicket:id="headercell">header cell</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr wicket:id="tablerow">
+				<th wicket:id="headercolumn">header column cell</th>
+				<td wicket:id="cell">cell data</td>
+			</tr>
+		</tbody>
 	</table>
 </body>
 
