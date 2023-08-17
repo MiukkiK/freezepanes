@@ -3,7 +3,7 @@ package miukkik.freezepanes;
 import java.util.ArrayList;
 
 public class Table {
-
+	
 	private ArrayList<ArrayList<Cell>> table;
 	
 	public Table() {
@@ -21,4 +21,5 @@ public class Table {
 	public ArrayList<ArrayList<Cell>> getTable() {
 		return table;
 	}
+	
 }

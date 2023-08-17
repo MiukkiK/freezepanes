@@ -1,0 +1,31 @@
+table,
+th,
+td {
+	border: 1px solid black;
+}
+
+th {
+	background: white;
+}
+
+
+thead {
+	position: sticky;
+	top: 0;
+	padding: .5rem;
+	z-index: 2;
+}
+
+thead tr> :first-child {
+	position: sticky;
+	left: 0;
+	top: 0;
+	z-index: 3;
+}
+
+tbody tr>th {
+	position: sticky;
+	left: 0;
+	z-index: 1;
+
+}
