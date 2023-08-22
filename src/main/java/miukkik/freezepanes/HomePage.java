@@ -4,7 +4,6 @@ import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -13,14 +12,11 @@ import org.apache.wicket.model.CompoundPropertyModel;
 /**
  * Homepage
  */
-public class HomePage extends WebPage {
+public class HomePage extends FpPage {
 
 	private static final long serialVersionUID = 1L;
 
-	private static int FREEZE_ROWS = 2;
-
-
-	// TODO Add any page properties or variables here
+	private final int FREEZE_ROWS = 2;
 
 	/**
 	 * Constructor that is invoked when page is invoked without a session.
@@ -28,8 +24,9 @@ public class HomePage extends WebPage {
 	 * @param parameters
 	 *            Page parameters
 	 */
+	
 	public HomePage(final PageParameters parameters) {
-		final Table table = WicketApplication.getTable();
+		Table table = getFpSession().getTable();
 
 		RepeatingView headerContainer = new RepeatingView("tablehead");
 		add(headerContainer);

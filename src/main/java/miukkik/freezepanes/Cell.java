@@ -1,8 +1,6 @@
 package miukkik.freezepanes;
 
-import java.io.Serializable;
-
-public class Cell implements Serializable{
+public class Cell implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String content;
