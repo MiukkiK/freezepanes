@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.PropertyModel;
 
 
 /**
@@ -24,7 +25,7 @@ public class HomePage extends FpPage {
 	 * @param parameters
 	 *            Page parameters
 	 */
-	
+
 	public HomePage(final PageParameters parameters) {
 		Table table = getFpSession().getTable();
 
@@ -52,25 +53,22 @@ public class HomePage extends FpPage {
 			container.add(cells);
 			for (int j=1; j<table.getTable().get(i).size(); j++) {
 				Cell cell = table.getTable().get(i).get(j);
-				CompoundPropertyModel<Cell> cellModel = new CompoundPropertyModel<Cell>(cell);
-				AjaxLink<Cell> link = new AjaxLink<Cell>(String.valueOf(j), cellModel) {
+				final Label label = new Label("celldata", new PropertyModel<String>(cell, "content"));
+				label.setOutputMarkupId(true);
+				AjaxLink<Cell> link = new AjaxLink<Cell>(String.valueOf(j), new CompoundPropertyModel<Cell>(cell)) {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void onClick(AjaxRequestTarget target) {
-						getModelObject().setContent("");
-						setResponsePage(HomePage.class);
+						if (target != null) {
+							getModelObject().setContent("");
+							target.addComponent(label);
+						}
 					}
-
 				};
 				cells.add(link);
-				Label label = new Label("celldata", cell.getContent());
-				label.setOutputMarkupId(true);
 				link.add(label);
-
 			}
-
 		}
-
 	}
 }
