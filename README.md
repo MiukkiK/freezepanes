@@ -1,5 +1,10 @@
 <h1>Freeze Panes with Wicket</h1>
-<p>Makes a server at <a href="http://localhost:8080">localhost:8080</a> for a wicket application that holds a table of cells. Cells are prefilled and can be cleared by clicking.</p>
+<p>The application makes a Jetty server at <a href="http://localhost:8080">localhost:8080</a>.</p>
+<p>Application holds a table of data that can be edited cell by cell.</p>
+<p>The application supports multiple sessions.</p>
+<p>The table is prefilled with test data for every user.</p>
 <h3>Usage</h3>
 <p>Launch from src/test/java/StartFreezePanes.java</p>
-<p>Click on a cell to delete it.</p>
+<p>Go to localhost:8080 and click on a cell to display the textbox for editing.</p>
+<p>After changing the text, user can click Save button to save the new text into the selected cell, or cancel to keep the old data.</p>
+<p>Edit box is only visible while a cell is selected.</p>

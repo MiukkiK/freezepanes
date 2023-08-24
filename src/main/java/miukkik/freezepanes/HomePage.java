@@ -1,17 +1,18 @@
 package miukkik.freezepanes;
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.repeater.RepeatingView;
-import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 
 
 /**
- * Homepage
+ * Main page of the application.
  */
 public class HomePage extends FpPage {
 
@@ -19,16 +20,50 @@ public class HomePage extends FpPage {
 
 	private final int FREEZE_ROWS = 2;
 
+	private Label focusTarget;
+
 	/**
-	 * Constructor that is invoked when page is invoked without a session.
-	 * 
-	 * @param parameters
-	 *            Page parameters
+	 * Constructor for a HomePage.
 	 */
 
-	public HomePage(final PageParameters parameters) {
+	public HomePage() {
 		Table table = getFpSession().getTable();
 
+		final TextField<String> editBox = new TextField<String>("editbox");
+		final Form<String> editForm = new Form<String>("editform");
+		
+		editForm.setVisible(false);
+		add(editForm);
+		editForm.setOutputMarkupPlaceholderTag(true);
+		editForm.add(editBox);
+		editBox.setOutputMarkupPlaceholderTag(true);
+
+		editForm.add(new AjaxButton("savebutton") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+				if (target != null) {
+					editForm.setVisible(false);
+					target.addComponent(editForm);
+					target.addComponent(focusTarget);
+				}
+			}
+		});
+		editForm.add(new AjaxLink<String>("cancelbutton") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick(AjaxRequestTarget target) {
+				if (target != null) {
+					editForm.setVisible(false);
+					target.addComponent(editForm);
+				}
+			}
+		});
+		
 		RepeatingView headerContainer = new RepeatingView("tablehead");
 		add(headerContainer);
 		for (int i=0; i<FREEZE_ROWS; i++) {
@@ -52,18 +87,23 @@ public class HomePage extends FpPage {
 			RepeatingView cells = new RepeatingView("cell");
 			container.add(cells);
 			for (int j=1; j<table.getTable().get(i).size(); j++) {
-				Cell cell = table.getTable().get(i).get(j);
-				final Label label = new Label("celldata", new PropertyModel<String>(cell, "content"));
+				final PropertyModel<String> model = new PropertyModel<String>(table.getTable().get(i).get(j), "content");
+				final Label label = new Label("celldata", model);			
 				label.setOutputMarkupId(true);
-				AjaxLink<Cell> link = new AjaxLink<Cell>(String.valueOf(j), new CompoundPropertyModel<Cell>(cell)) {
+				AjaxLink<Cell> link = new AjaxLink<Cell>(String.valueOf(j)) {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void onClick(AjaxRequestTarget target) {
-						if (target != null) {
-							getModelObject().setContent("");
-							target.addComponent(label);
+					public void onClick(AjaxRequestTarget target) {						
+						if ((focusTarget == null)||(!label.getMarkupId().equals(focusTarget.getMarkupId()))) {
+							focusTarget = label;
+							editForm.setVisible(true);
+							editBox.setModel(model);
+							target.addComponent(editForm);
+							target.addComponent(editBox);
+							
 						}
+						target.focusComponent(editBox);
 					}
 				};
 				cells.add(link);

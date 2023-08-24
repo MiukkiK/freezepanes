@@ -1,19 +1,37 @@
+div {
+	max-width: 75%;
+	position: sticky;
+	top: 10px;
+	left: 0;
+	z-index: 5
+}
+
 table,
 th,
 td {
+	background: white;
 	border: 1px solid black;
 }
 
-th {
-	background: white;
+table {
+	position: sticky;
+	top: 0;
 }
-
 
 thead {
 	position: sticky;
 	top: 0;
-	padding: .5rem;
 	z-index: 2;
+}
+
+thead :first-child {
+	background: white;
+
+	z-index: 4;
+}
+
+th {
+	background: white;
 }
 
 thead tr> :first-child {
