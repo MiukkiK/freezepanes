@@ -18,6 +18,7 @@ public class WicketApplication extends org.apache.wicket.protocol.http.WebApplic
 		
 	}
 
+	//Custom session override for Table element passing.
 	@Override
 	 public Session newSession(Request request, Response response) {
 	 return new FpSession(request);

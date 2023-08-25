@@ -2,6 +2,10 @@ package miukkik.freezepanes;
 
 import org.apache.wicket.Request;
 
+/**
+ * Custom WebSession extension that holds a Table element. Initializes the Table with test data.
+ * @author Mia Kallio
+ */
 public class FpSession extends org.apache.wicket.protocol.http.WebSession {
 
 	private static final long serialVersionUID = 1L;

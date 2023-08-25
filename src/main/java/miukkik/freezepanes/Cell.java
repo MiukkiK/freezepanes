@@ -1,5 +1,10 @@
 package miukkik.freezepanes;
 
+/**
+ * A single cell component of a table.
+ * 
+ * @author Mia Kallio
+ */
 public class Cell implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	

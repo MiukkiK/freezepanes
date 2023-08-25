@@ -2,6 +2,10 @@ package miukkik.freezepanes;
 
 import java.util.ArrayList;
 
+/**
+ * Two-dimensional table of Cells made with ArrayLists.
+ * @author Mia Kallio
+ */
 public class Table {
 	
 	private ArrayList<ArrayList<Cell>> table;

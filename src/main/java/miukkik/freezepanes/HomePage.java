@@ -13,6 +13,7 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 
 /**
  * Main page of the application.
+ * @author Mia Kallio
  */
 public class HomePage extends FpPage {
 
@@ -22,22 +23,20 @@ public class HomePage extends FpPage {
 
 	private Label focusTarget;
 
-	/**
-	 * Constructor for a HomePage.
-	 */
-
 	public HomePage() {
 		Table table = getFpSession().getTable();
 
 		final TextField<String> editBox = new TextField<String>("editbox");
 		final Form<String> editForm = new Form<String>("editform");
 		
+		
+		// Edit area of the table, hidden at start, becomes visible when a Cell is selected.
+		
 		editForm.setVisible(false);
 		add(editForm);
 		editForm.setOutputMarkupPlaceholderTag(true);
 		editForm.add(editBox);
 		editBox.setOutputMarkupPlaceholderTag(true);
-
 		editForm.add(new AjaxButton("savebutton") {
 
 			private static final long serialVersionUID = 1L;
@@ -51,6 +50,7 @@ public class HomePage extends FpPage {
 				}
 			}
 		});
+		
 		editForm.add(new AjaxLink<String>("cancelbutton") {
 
 			private static final long serialVersionUID = 1L;
@@ -64,6 +64,7 @@ public class HomePage extends FpPage {
 			}
 		});
 		
+		// Top header of the Table, height defined in FREEZE_ROWS.
 		RepeatingView headerContainer = new RepeatingView("tablehead");
 		add(headerContainer);
 		for (int i=0; i<FREEZE_ROWS; i++) {
@@ -75,7 +76,8 @@ public class HomePage extends FpPage {
 				headers.add(new Label(String.valueOf(j), table.getTable().get(i).get(j).getContent()));
 			}
 
-		}    	
+		} 
+		// Rest of the table, first Cell of each row is part of the left header.
 		RepeatingView repeatContainer = new RepeatingView("tablebody");
 		add(repeatContainer);
 		for (int i=FREEZE_ROWS; i<table.getTable().size(); i++) {
@@ -93,6 +95,7 @@ public class HomePage extends FpPage {
 				AjaxLink<Cell> link = new AjaxLink<Cell>(String.valueOf(j)) {
 					private static final long serialVersionUID = 1L;
 
+					//Actions when a cell is clicked
 					@Override
 					public void onClick(AjaxRequestTarget target) {						
 						if ((focusTarget == null)||(!label.getMarkupId().equals(focusTarget.getMarkupId()))) {
