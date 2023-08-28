@@ -24,8 +24,8 @@ public class Table implements java.io.Serializable {
 		table.add(row);
 	}
 	
-	public Cell get(int i, int j) {
-		return table.get(i).get(j);
+	public Cell get(int row, int column) {
+		return table.get(row).get(column);
 	}
 	
 	public int getHeight() {

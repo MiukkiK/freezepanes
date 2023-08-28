@@ -91,24 +91,24 @@ public class HomePage extends FpPage {
 			headerContainer.add(container);
 			RepeatingView headers = new RepeatingView("topheader");
 			container.add(headers);
-			for (int j=0; j<table.getTable().get(i).size(); j++) {
-				headers.add(new Label(String.valueOf(j), table.getTable().get(i).get(j).getContent()));
+			for (int j=0; j<table.getWidth(); j++) {
+				headers.add(new Label(String.valueOf(j), table.get(i,j).getContent()));
 			}
 
 		} 
 		// Rest of the table, first Cell of each row is part of the left header.
 		RepeatingView repeatContainer = new RepeatingView("tablebody");
 		add(repeatContainer);
-		for (int i=FREEZE_ROWS; i<table.getTable().size(); i++) {
+		for (int i=FREEZE_ROWS; i<table.getHeight(); i++) {
 			WebMarkupContainer container = new WebMarkupContainer(String.valueOf(i));
 
 			repeatContainer.add(container);
-			container.add(new Label("leftheader", table.getTable().get(i).get(0).getContent()));
+			container.add(new Label("leftheader", table.get(i,0).getContent()));
 
 			RepeatingView cells = new RepeatingView("cell");
 			container.add(cells);
-			for (int j=1; j<table.getTable().get(i).size(); j++) {
-				final PropertyModel<String> model = new PropertyModel<String>(table.getTable().get(i).get(j), "content");
+			for (int j=1; j<table.getWidth(); j++) {
+				final PropertyModel<String> model = new PropertyModel<String>(table.get(i,j), "content");
 				final Label label = new Label("celldata", model);			
 				label.setOutputMarkupId(true);
 				AjaxLink<Cell> link = new AjaxLink<Cell>(String.valueOf(j)) {
