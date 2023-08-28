@@ -28,10 +28,25 @@ public class HomePage extends FpPage {
 
 		final TextField<String> editBox = new TextField<String>("editbox");
 		final Form<String> editForm = new Form<String>("editform");
-		
+		final AjaxLink<String> randomEdit = new AjaxLink<String>("randomedit") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick(AjaxRequestTarget target) {
+				if (target != null) {}
+			// Random randoms = new Random();
+			// int rndI = FREEZE_ROWS + randoms.nextInt(table.getHeight() - FREEZE_ROWS);
+			// int rndJ = 1 + randoms.nextInt(table.getWidth() - 1);
+			// TODO set the randomized cell label to focusTarget variable
+			}
+			
+		};
 		
 		// Edit area of the table, hidden at start, becomes visible when a Cell is selected.
 		
+		add(randomEdit);
+		randomEdit.setOutputMarkupPlaceholderTag(true);
 		editForm.setVisible(false);
 		add(editForm);
 		editForm.setOutputMarkupPlaceholderTag(true);
@@ -45,7 +60,9 @@ public class HomePage extends FpPage {
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				if (target != null) {
 					editForm.setVisible(false);
+					randomEdit.setVisible(true);
 					target.addComponent(editForm);
+					target.addComponent(randomEdit);
 					target.addComponent(focusTarget);
 				}
 			}
@@ -59,7 +76,9 @@ public class HomePage extends FpPage {
 			public void onClick(AjaxRequestTarget target) {
 				if (target != null) {
 					editForm.setVisible(false);
+					randomEdit.setVisible(true);
 					target.addComponent(editForm);
+					target.addComponent(randomEdit);
 				}
 			}
 		});
@@ -101,7 +120,9 @@ public class HomePage extends FpPage {
 						if ((focusTarget == null)||(!label.getMarkupId().equals(focusTarget.getMarkupId()))) {
 							focusTarget = label;
 							editForm.setVisible(true);
+							randomEdit.setVisible(false);
 							editBox.setModel(model);
+							target.addComponent(randomEdit);
 							target.addComponent(editForm);
 							target.addComponent(editBox);
 							

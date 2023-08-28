@@ -6,7 +6,9 @@ import java.util.ArrayList;
  * Two-dimensional table of Cells made with ArrayLists.
  * @author Mia Kallio
  */
-public class Table {
+public class Table implements java.io.Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	private ArrayList<ArrayList<Cell>> table;
 	
@@ -22,8 +24,16 @@ public class Table {
 		table.add(row);
 	}
 	
-	public ArrayList<ArrayList<Cell>> getTable() {
-		return table;
+	public Cell get(int i, int j) {
+		return table.get(i).get(j);
 	}
 	
+	public int getHeight() {
+		return table.size();
+	}
+	
+	public int getWidth() {
+		// refactor if different amount of rows allowed
+		return table.get(0).size();
+	}
 }
