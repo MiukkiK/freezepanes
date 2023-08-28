@@ -9,7 +9,8 @@ public class Cell implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String content;
-
+	private String referenceId;
+	
 	public Cell() {
 		content = "";
 	}
@@ -26,4 +27,13 @@ public class Cell implements java.io.Serializable{
 		this.content = content;
 	}
 
+	public String getReferenceId() {
+		return referenceId;
+	}
+
+	public void setReferenceId(String referenceId) {
+		this.referenceId = referenceId;
+	}
+	
+	
 }

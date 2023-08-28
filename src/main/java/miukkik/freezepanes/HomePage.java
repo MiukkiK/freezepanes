@@ -111,6 +111,7 @@ public class HomePage extends FpPage {
 				final PropertyModel<String> model = new PropertyModel<String>(table.get(i,j), "content");
 				final Label label = new Label("celldata", model);			
 				label.setOutputMarkupId(true);
+				table.get(i, j).setReferenceId(label.getMarkupId());
 				AjaxLink<Cell> link = new AjaxLink<Cell>(String.valueOf(j)) {
 					private static final long serialVersionUID = 1L;
 
