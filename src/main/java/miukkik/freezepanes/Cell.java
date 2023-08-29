@@ -1,5 +1,7 @@
 package miukkik.freezepanes;
 
+import org.apache.wicket.markup.html.basic.Label;
+
 /**
  * A single cell component of a table.
  * 
@@ -9,7 +11,7 @@ public class Cell implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String content;
-	private String referenceId;
+	private Label label;
 	
 	public Cell() {
 		content = "";
@@ -27,13 +29,12 @@ public class Cell implements java.io.Serializable{
 		this.content = content;
 	}
 
-	public String getReferenceId() {
-		return referenceId;
+	public Label getLabel() {
+		return label;
 	}
 
-	public void setReferenceId(String referenceId) {
-		this.referenceId = referenceId;
+	public void setLabel(Label label) {
+		this.label = label;
 	}
-	
-	
+
 }

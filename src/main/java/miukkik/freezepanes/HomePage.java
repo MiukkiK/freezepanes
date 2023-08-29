@@ -1,5 +1,7 @@
 package miukkik.freezepanes;
 
+import java.util.Random;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -27,17 +29,17 @@ public class HomePage extends FpPage {
 		final Table table = getFpSession().getTable();
 
 		final TextField<String> editBox = new TextField<String>("editbox");
-		
+
 		final Form<String> editForm = new Form<String>("editform") {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			public void onConfigure() {
 				if (focusTarget == null) this.setVisible(false); else this.setVisible(true);
 			}	
 		};
-		
+
 		final AjaxLink<String> randomEdit = new AjaxLink<String>("randomedit") {
 
 			private static final long serialVersionUID = 1L;
@@ -46,26 +48,29 @@ public class HomePage extends FpPage {
 			public void onConfigure() {
 				if (focusTarget == null) this.setVisible(true); else this.setVisible(false);
 			}
-			
+
 			@Override
 			public void onClick(AjaxRequestTarget target) {
 				if (target != null) {}
-			// Random randoms = new Random();
-			// int rndI = FREEZE_ROWS + randoms.nextInt(table.getHeight() - FREEZE_ROWS);
-			// int rndJ = 1 + randoms.nextInt(table.getWidth() - 1);
-			// TODO set the randomized cell label to focusTarget variable
+				Random randoms = new Random();
+				int rndI = FREEZE_ROWS + randoms.nextInt(table.getHeight() - FREEZE_ROWS);
+				int rndJ = 1 + randoms.nextInt(table.getWidth() - 1);
+				Cell targetCell = table.get(rndI,rndJ);
+				targetCell.setContent(RandomEditPhrases.get());
+				target.addComponent(targetCell.getLabel());
 			}
-			
+
 		};
-		
-		// Edit area of the table, hidden at start, becomes visible when a Cell is selected.
-		
 		add(randomEdit);
+
+		// Edit area of the table, hidden at start, becomes visible when a Cell is selected.
+
 		randomEdit.setOutputMarkupPlaceholderTag(true);
 		add(editForm);
 		editForm.setOutputMarkupPlaceholderTag(true);
 		editForm.add(editBox);
 		editBox.setOutputMarkupPlaceholderTag(true);
+
 		editForm.add(new AjaxButton("savebutton") {
 
 			private static final long serialVersionUID = 1L;
@@ -77,12 +82,10 @@ public class HomePage extends FpPage {
 					target.addComponent(randomEdit);
 					target.addComponent(focusTarget);
 					focusTarget = null;
-					editForm.configure();
-					randomEdit.configure();
 				}
 			}
 		});
-		
+
 		editForm.add(new AjaxLink<String>("cancelbutton") {
 
 			private static final long serialVersionUID = 1L;
@@ -93,12 +96,10 @@ public class HomePage extends FpPage {
 					target.addComponent(editForm);
 					target.addComponent(randomEdit);
 					focusTarget = null;
-					editForm.configure();
-					randomEdit.configure();
 				}
 			}
 		});
-		
+
 		// Top header of the Table, height defined in FREEZE_ROWS.
 		final RepeatingView headerContainer = new RepeatingView("tablehead");
 		add(headerContainer);
@@ -127,7 +128,7 @@ public class HomePage extends FpPage {
 				final PropertyModel<String> model = new PropertyModel<String>(table.get(i,j), "content");
 				final Label label = new Label("celldata", model);			
 				label.setOutputMarkupId(true);
-				table.get(i, j).setReferenceId(label.getMarkupId());
+				table.get(i, j).setLabel(label);
 				AjaxLink<Cell> link = new AjaxLink<Cell>(String.valueOf(j)) {
 					private static final long serialVersionUID = 1L;
 
@@ -139,9 +140,7 @@ public class HomePage extends FpPage {
 							target.addComponent(editForm);
 							target.addComponent(editBox);
 							focusTarget = label;
-							editBox.setModel(model);
-							editForm.configure();
-							randomEdit.configure();				
+							editBox.setModel(model);			
 						}
 						target.focusComponent(editBox);
 					}
