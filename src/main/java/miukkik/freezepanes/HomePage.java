@@ -8,9 +8,11 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.behavior.SimpleAttributeModifier;
 
 
 /**
@@ -27,7 +29,42 @@ public class HomePage extends FpPage {
 
 	public HomePage() {
 		final Table table = getFpSession().getTable();
+		
+		final WebMarkupContainer wrapper = new WebMarkupContainer("wrapper");
+		final Link<String> defaultView = new Link<String>("default") {
 
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick() {
+				wrapper.add(new SimpleAttributeModifier("class", "default"));
+			}
+		};
+		final Link<String> laptopView = new Link<String>("laptop") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick() {
+				wrapper.add(new SimpleAttributeModifier("class", "laptop"));		
+			}
+		};
+		final Link<String> mobileView = new Link<String>("mobile") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick() {
+				wrapper.add(new SimpleAttributeModifier("class", "mobile"));
+				
+			}
+		};
+		
+		add(wrapper);
+		wrapper.add(defaultView);
+		wrapper.add(laptopView);
+		wrapper.add(mobileView);
+		
 		final TextField<String> editBox = new TextField<String>("editbox");
 
 		final Form<String> editForm = new Form<String>("editform") {
@@ -61,12 +98,12 @@ public class HomePage extends FpPage {
 			}
 
 		};
-		add(randomEdit);
+		wrapper.add(randomEdit);
 
 		// Edit area of the table, hidden at start, becomes visible when a Cell is selected.
 
 		randomEdit.setOutputMarkupPlaceholderTag(true);
-		add(editForm);
+		wrapper.add(editForm);
 		editForm.setOutputMarkupPlaceholderTag(true);
 		editForm.add(editBox);
 		editBox.setOutputMarkupPlaceholderTag(true);
@@ -102,7 +139,7 @@ public class HomePage extends FpPage {
 
 		// Top header of the Table, height defined in FREEZE_ROWS.
 		final RepeatingView headerContainer = new RepeatingView("tablehead");
-		add(headerContainer);
+		wrapper.add(headerContainer);
 		for (int i=0; i<FREEZE_ROWS; i++) {
 			WebMarkupContainer container = new WebMarkupContainer(String.valueOf(i));
 			headerContainer.add(container);
@@ -115,7 +152,7 @@ public class HomePage extends FpPage {
 		} 
 		// Rest of the table, first Cell of each row is part of the left header.
 		final RepeatingView repeatContainer = new RepeatingView("tablebody");
-		add(repeatContainer);
+		wrapper.add(repeatContainer);
 		for (int i=FREEZE_ROWS; i<table.getHeight(); i++) {
 			WebMarkupContainer container = new WebMarkupContainer(String.valueOf(i));
 

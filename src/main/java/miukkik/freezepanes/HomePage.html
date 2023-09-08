@@ -6,29 +6,34 @@
 </head>
 
 <body>
-	<div class="editarea">
-		<button type="button" wicket:id="randomedit">Random Edit</button>
-		<form wicket:id="editform">
-			<input wicket:id="editbox" type="text" size="50" value="editbox test" onfocus="select();"></input>
-			<input type="submit" wicket:id="savebutton" value="Save"></input>
-			<button type="button" wicket:id="cancelbutton">Cancel</button>
-		</form>
+	<div class="default" wicket:id="wrapper">
+		<a wicket:id="default" href="#">Default screen</a>
+		<a wicket:id="laptop" href="#">Emulate an old laptop screen</a>
+		<a wicket:id="mobile" href="#">Emulate a mobile device screen</a>
+		<div class="editarea">
+			<button type="button" wicket:id="randomedit">Random Edit</button>
+			<form wicket:id="editform">
+				<input wicket:id="editbox" type="text" size="50" value="editbox test" onfocus="select();"></input>
+				<input type="submit" wicket:id="savebutton" value="Save"></input>
+				<button type="button" wicket:id="cancelbutton">Cancel</button>
+			</form>
+		</div>
+		<table>
+			<thead class="stickytop">
+				<tr wicket:id="tablehead">
+					<th wicket:id="topheader">header cell</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr wicket:id="tablebody">
+					<th wicket:id="leftheader">header column cell</th>
+					<td wicket:id="cell">
+						<p wicket:id="celldata"></p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
-	<table>
-		<thead class="stickytop">
-			<tr wicket:id="tablehead">
-				<th wicket:id="topheader">header cell</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr wicket:id="tablebody">
-				<th wicket:id="leftheader">header column cell</th>
-				<td wicket:id="cell">
-					<p wicket:id="celldata"></p>
-				</td>
-			</tr>
-		</tbody>
-	</table>
 </body>
 
 </html>

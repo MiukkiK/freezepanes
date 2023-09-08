@@ -1,3 +1,17 @@
+.laptop {
+	width: 800px;
+	height: 600px;
+	border: 1px solid black;
+	overflow: scroll;
+}
+
+.mobile {
+	width: 480px;
+	height: 800px;
+	border: 1px solid black;
+	overflow: scroll;
+}
+
 .editarea {
 	max-width: 75%;
 	position: sticky;
